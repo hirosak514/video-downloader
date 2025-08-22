@@ -6,6 +6,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Alert, AlertDescription } from '@/components/ui/alert'
 import { Progress } from '@/components/ui/progress'
 import { useIsMobile } from '@/hooks/use-mobile'
+import AdComponent from '@/components/AdComponent'
 import './App.css'
 
 interface VideoInfo {
@@ -75,6 +76,12 @@ function App() {
   const downloadVideo = async (formatId?: string) => {
     if (!videoInfo) return
 
+    const triggerButton = document.getElementById('trigger-ad') as HTMLButtonElement
+    if (triggerButton) {
+      triggerButton.click()
+      await new Promise(resolve => setTimeout(resolve, 1000))
+    }
+
     setDownloadProgress({ status: 'downloading', progress: 0 })
     setError('')
 
@@ -117,6 +124,12 @@ function App() {
 
   const downloadVideoMobile = async (formatId?: string) => {
     if (!videoInfo) return
+
+    const triggerButton = document.getElementById('trigger-ad') as HTMLButtonElement
+    if (triggerButton) {
+      triggerButton.click()
+      await new Promise(resolve => setTimeout(resolve, 1000))
+    }
 
     setDownloadProgress({ status: 'downloading', progress: 0 })
     setError('')
@@ -226,6 +239,8 @@ function App() {
             <AlertDescription className="text-red-800">{error}</AlertDescription>
           </Alert>
         )}
+
+        <AdComponent placement="content" className="mb-6" />
 
         {videoInfo && (
           <Card className="mb-6">
@@ -340,6 +355,8 @@ function App() {
           <p>対応サイト: YouTube, Twitter, Facebook, Instagram, TikTok, その他多数</p>
           <p className="mt-1">著作権を尊重し、個人利用の範囲でご利用ください</p>
         </div>
+
+        <AdComponent placement="footer" className="mt-6" />
       </div>
     </div>
   )
