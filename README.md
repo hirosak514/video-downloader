@@ -1,50 +1,73 @@
-# React + TypeScript + Vite
+# 動画ダウンローダー (Video Downloader)
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+YouTube、Twitter、一般的なウェブサイトの動画をダウンロードできるウェブアプリケーション。Monetag広告統合機能付き。
 
-Currently, two official plugins are available:
+## 🎯 機能
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- **多サイト対応**: YouTube、Twitter、Facebook、Instagram、TikTok、その他多数のサイトに対応
+- **高品質ダウンロード**: 複数の品質オプションから選択可能
+- **モバイル対応**: スマートフォンでの写真アルバム保存機能（Web Share API）
+- **広告統合**: Monetag広告ネットワーク統合による収益化
+- **レスポンシブデザイン**: デスクトップ・モバイル両対応
 
-## Expanding the ESLint configuration
+## 🚀 技術スタック
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+### フロントエンド
+- React 18 + TypeScript
+- Vite (高速ビルドツール)
+- Tailwind CSS + shadcn/ui
+- Web Share API (モバイル対応)
 
-- Configure the top-level `parserOptions` property like this:
+### バックエンド
+- FastAPI (Python)
+- yt-dlp (動画ダウンロードライブラリ)
+- Poetry (依存関係管理)
 
-```js
-export default tseslint.config({
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
+### 広告統合
+- Monetag (旧PropellerAds) SDK
+- React対応広告コンポーネント
+- 環境変数による設定管理
+
+## 📦 デプロイ
+
+### Docker Compose (推奨)
+```bash
+docker-compose up -d
 ```
 
-- Replace `tseslint.configs.recommended` to `tseslint.configs.recommendedTypeChecked` or `tseslint.configs.strictTypeChecked`
-- Optionally add `...tseslint.configs.stylisticTypeChecked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and update the config:
+### 手動デプロイ
+詳細は `SELF_HOSTING_GUIDE.md` を参照してください。
 
-```js
-// eslint.config.js
-import react from 'eslint-plugin-react'
+## 🔧 環境変数
 
-export default tseslint.config({
-  // Set the react version
-  settings: { react: { version: '18.3' } },
-  plugins: {
-    // Add the react plugin
-    react,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended rules
-    ...react.configs.recommended.rules,
-    ...react.configs['jsx-runtime'].rules,
-  },
-})
+### フロントエンド (.env)
 ```
+VITE_API_URL=https://your-backend-url.com
+VITE_MONETAG_ZONE_ID=your_zone_id_here
+VITE_ENABLE_ADS=true
+```
+
+### バックエンド
+```
+PORT=8000
+```
+
+## 📱 使用方法
+
+1. 動画URLを入力フィールドに貼り付け
+2. 「動画を解析」ボタンをクリック
+3. 品質を選択してダウンロード
+4. モバイルの場合は「写真アプリに保存」でアルバムに直接保存
+
+## 🎨 広告設定
+
+Monetagアカウントを作成し、Zone IDを環境変数に設定することで広告を有効化できます。
+
+## 📄 ライセンス
+
+個人利用の範囲でご利用ください。著作権を尊重し、適切にご使用ください。
+
+---
+
+Link to Devin run: https://app.devin.ai/sessions/3d68dd71b4714a88bf5d0c76dade1dd9
+Requested by: iromsa airi (dddddbbbbbrrrrr@gmail.com)
