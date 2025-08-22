@@ -1,10 +1,11 @@
 import { useState } from 'react'
-import { Download, Video, AlertCircle, CheckCircle, Loader2 } from 'lucide-react'
+import { Download, Video, AlertCircle, CheckCircle, Loader2, Share } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { Alert, AlertDescription } from '@/components/ui/alert'
 import { Progress } from '@/components/ui/progress'
+import { useIsMobile } from '@/hooks/use-mobile'
 import './App.css'
 
 interface VideoInfo {
@@ -24,6 +25,7 @@ interface DownloadProgress {
   progress: number
   filename?: string
   error?: string
+  shared?: boolean
 }
 
 function App() {
@@ -32,6 +34,8 @@ function App() {
   const [isExtracting, setIsExtracting] = useState(false)
   const [downloadProgress, setDownloadProgress] = useState<DownloadProgress | null>(null)
   const [error, setError] = useState('')
+  const isMobile = useIsMobile()
+  const canShare = typeof navigator !== 'undefined' && 'share' in navigator && typeof navigator.canShare === 'function'
 
   const API_BASE = import.meta.env.VITE_API_URL || 'http://localhost:8000'
 
@@ -102,6 +106,68 @@ function App() {
       window.URL.revokeObjectURL(downloadUrl)
 
       setDownloadProgress({ status: 'completed', progress: 100, filename: a.download })
+    } catch (err) {
+      setDownloadProgress({ 
+        status: 'error', 
+        progress: 0, 
+        error: err instanceof Error ? err.message : 'ダウンロードエラー' 
+      })
+    }
+  }
+
+  const downloadVideoMobile = async (formatId?: string) => {
+    if (!videoInfo) return
+
+    setDownloadProgress({ status: 'downloading', progress: 0 })
+    setError('')
+
+    try {
+      const response = await fetch(`${API_BASE}/api/download`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ 
+          url: url.trim(),
+          format_id: formatId 
+        }),
+      })
+
+      if (!response.ok) {
+        const errorData = await response.json()
+        throw new Error(errorData.detail || 'ダウンロードに失敗しました')
+      }
+
+      const blob = await response.blob()
+      const filename = `${videoInfo.title}.${formatId ? videoInfo.formats.find(f => f.format_id === formatId)?.ext || 'mp4' : 'mp4'}`
+      
+      if (isMobile && canShare) {
+        try {
+          const file = new File([blob], filename, { type: blob.type })
+          if (navigator.canShare && navigator.canShare({ files: [file] })) {
+            await navigator.share({
+              title: videoInfo.title,
+              text: '動画をダウンロードしました',
+              files: [file]
+            })
+            setDownloadProgress({ status: 'completed', progress: 100, filename, shared: true })
+            return
+          }
+        } catch (shareError) {
+          console.log('Web Share failed, falling back to download:', shareError)
+        }
+      }
+      
+      const downloadUrl = window.URL.createObjectURL(blob)
+      const a = document.createElement('a')
+      a.href = downloadUrl
+      a.download = filename
+      document.body.appendChild(a)
+      a.click()
+      document.body.removeChild(a)
+      window.URL.revokeObjectURL(downloadUrl)
+
+      setDownloadProgress({ status: 'completed', progress: 100, filename })
     } catch (err) {
       setDownloadProgress({ 
         status: 'error', 
@@ -184,12 +250,13 @@ function App() {
                   
                   <div className="space-y-2">
                     <Button 
-                      onClick={() => downloadVideo()} 
+                      onClick={() => isMobile ? downloadVideoMobile() : downloadVideo()} 
                       className="w-full sm:w-auto"
                       disabled={downloadProgress?.status === 'downloading'}
                     >
-                      <Download className="h-4 w-4 mr-2" />
-                      {downloadProgress?.status === 'downloading' ? 'ダウンロード中...' : 'ダウンロード (最高品質)'}
+                      {isMobile && canShare ? <Share className="h-4 w-4 mr-2" /> : <Download className="h-4 w-4 mr-2" />}
+                      {downloadProgress?.status === 'downloading' ? 'ダウンロード中...' : 
+                       isMobile && canShare ? '写真アプリに保存' : 'ダウンロード (最高品質)'}
                     </Button>
                     
                     {videoInfo.formats.length > 1 && (
@@ -203,7 +270,7 @@ function App() {
                               key={format.format_id}
                               variant="outline"
                               size="sm"
-                              onClick={() => downloadVideo(format.format_id)}
+                              onClick={() => isMobile ? downloadVideoMobile(format.format_id) : downloadVideo(format.format_id)}
                               disabled={downloadProgress?.status === 'downloading'}
                               className="mr-2 mb-2"
                             >
@@ -242,7 +309,9 @@ function App() {
                 <Alert className="border-green-200 bg-green-50">
                   <CheckCircle className="h-4 w-4 text-green-600" />
                   <AlertDescription className="text-green-800">
-                    ダウンロード完了: {downloadProgress.filename}
+                    {downloadProgress.shared ? 
+                      `写真アプリに保存しました: ${downloadProgress.filename}` : 
+                      `ダウンロード完了: ${downloadProgress.filename}`}
                   </AlertDescription>
                 </Alert>
               )}
@@ -256,6 +325,15 @@ function App() {
               )}
             </CardContent>
           </Card>
+        )}
+
+        {isMobile && !canShare && (
+          <Alert className="mb-6 border-blue-200 bg-blue-50">
+            <AlertCircle className="h-4 w-4 text-blue-600" />
+            <AlertDescription className="text-blue-800">
+              <strong>モバイルユーザーへ:</strong> ダウンロード後、ファイルを写真アプリに保存するには、ダウンロードフォルダから動画ファイルを選択し、「共有」→「写真に保存」を選択してください。
+            </AlertDescription>
+          </Alert>
         )}
 
         <div className="mt-8 text-center text-sm text-gray-500">
