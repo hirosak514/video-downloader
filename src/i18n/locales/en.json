@@ -1,0 +1,43 @@
+{
+  "app": {
+    "title": "Video Downloader",
+    "description": "Download videos from YouTube, Twitter, and other websites",
+    "supportedSites": "Supported sites: YouTube, Twitter, Facebook, Instagram, TikTok, and many more",
+    "copyright": "Please respect copyright and use for personal purposes only"
+  },
+  "input": {
+    "title": "Enter Video URL",
+    "description": "Enter the URL of YouTube, Twitter, or other supported sites",
+    "placeholder": "https://www.youtube.com/watch?v=...",
+    "analyze": "Analyze",
+    "enterUrl": "Please enter a URL"
+  },
+  "video": {
+    "info": "Video Information",
+    "duration": "Duration",
+    "download": "Download (Best Quality)",
+    "downloading": "Downloading...",
+    "saveToPhotos": "Save to Photos",
+    "showOtherFormats": "Show other formats",
+    "downloaded": "Video downloaded"
+  },
+  "download": {
+    "status": "Download Status",
+    "progress": "Downloading...",
+    "completed": "Download completed: {{filename}}",
+    "savedToPhotos": "Saved to photos: {{filename}}",
+    "error": "Download error"
+  },
+  "errors": {
+    "general": "An error occurred",
+    "videoInfoFailed": "Failed to get video information",
+    "downloadFailed": "Download failed"
+  },
+  "mobile": {
+    "instruction": "For mobile users: After downloading, to save the file to your photo album, select the video file from your downloads folder and choose 'Share' → 'Save to Photos'."
+  },
+  "ads": {
+    "loading": "Loading ads...",
+    "loadFailed": "Failed to load ads"
+  }
+}

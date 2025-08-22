@@ -7,6 +7,7 @@ import { Alert, AlertDescription } from '@/components/ui/alert'
 import { Progress } from '@/components/ui/progress'
 import { useIsMobile } from '@/hooks/use-mobile'
 import AdComponent from '@/components/AdComponent'
+import { useTranslation } from 'react-i18next'
 import './App.css'
 
 interface VideoInfo {
@@ -30,6 +31,7 @@ interface DownloadProgress {
 }
 
 function App() {
+  const { t } = useTranslation()
   const [url, setUrl] = useState('')
   const [videoInfo, setVideoInfo] = useState<VideoInfo | null>(null)
   const [isExtracting, setIsExtracting] = useState(false)
@@ -42,7 +44,7 @@ function App() {
 
   const extractVideoInfo = async () => {
     if (!url.trim()) {
-      setError('URLを入力してください')
+      setError(t('input.enterUrl'))
       return
     }
 
@@ -61,13 +63,13 @@ function App() {
 
       if (!response.ok) {
         const errorData = await response.json()
-        throw new Error(errorData.detail || 'ビデオ情報の取得に失敗しました')
+        throw new Error(errorData.detail || t('errors.videoInfoFailed'))
       }
 
       const data = await response.json()
       setVideoInfo(data)
     } catch (err) {
-      setError(err instanceof Error ? err.message : 'エラーが発生しました')
+      setError(err instanceof Error ? err.message : t('errors.general'))
     } finally {
       setIsExtracting(false)
     }
@@ -99,7 +101,7 @@ function App() {
 
       if (!response.ok) {
         const errorData = await response.json()
-        throw new Error(errorData.detail || 'ダウンロードに失敗しました')
+        throw new Error(errorData.detail || t('errors.downloadFailed'))
       }
 
       const blob = await response.blob()
@@ -117,7 +119,7 @@ function App() {
       setDownloadProgress({ 
         status: 'error', 
         progress: 0, 
-        error: err instanceof Error ? err.message : 'ダウンロードエラー' 
+        error: err instanceof Error ? err.message : t('download.error') 
       })
     }
   }
@@ -148,7 +150,7 @@ function App() {
 
       if (!response.ok) {
         const errorData = await response.json()
-        throw new Error(errorData.detail || 'ダウンロードに失敗しました')
+        throw new Error(errorData.detail || t('errors.downloadFailed'))
       }
 
       const blob = await response.blob()
@@ -160,7 +162,7 @@ function App() {
           if (navigator.canShare && navigator.canShare({ files: [file] })) {
             await navigator.share({
               title: videoInfo.title,
-              text: '動画をダウンロードしました',
+              text: t('video.downloaded'),
               files: [file]
             })
             setDownloadProgress({ status: 'completed', progress: 100, filename, shared: true })
@@ -185,7 +187,7 @@ function App() {
       setDownloadProgress({ 
         status: 'error', 
         progress: 0, 
-        error: err instanceof Error ? err.message : 'ダウンロードエラー' 
+        error: err instanceof Error ? err.message : t('download.error') 
       })
     }
   }
@@ -196,23 +198,23 @@ function App() {
         <div className="text-center mb-8">
           <h1 className="text-4xl font-bold text-gray-900 mb-2 flex items-center justify-center gap-2">
             <Video className="h-8 w-8 text-blue-600" />
-            ビデオダウンローダー
+{t('app.title')}
           </h1>
-          <p className="text-gray-600">YouTube、Twitter、その他のウェブサイトから動画をダウンロード</p>
+          <p className="text-gray-600">{t('app.description')}</p>
         </div>
 
         <Card className="mb-6">
           <CardHeader>
-            <CardTitle>動画URLを入力</CardTitle>
+            <CardTitle>{t('input.title')}</CardTitle>
             <CardDescription>
-              YouTube、Twitter、その他の対応サイトのURLを入力してください
+              {t('input.description')}
             </CardDescription>
           </CardHeader>
           <CardContent>
             <div className="flex gap-2">
               <Input
                 type="url"
-                placeholder="https://www.youtube.com/watch?v=..."
+                placeholder={t('input.placeholder')}
                 value={url}
                 onChange={(e) => setUrl(e.target.value)}
                 onKeyPress={(e) => e.key === 'Enter' && extractVideoInfo()}
@@ -226,7 +228,7 @@ function App() {
                 {isExtracting ? (
                   <Loader2 className="h-4 w-4 animate-spin" />
                 ) : (
-                  '解析'
+                  t('input.analyze')
                 )}
               </Button>
             </div>
@@ -247,7 +249,7 @@ function App() {
             <CardHeader>
               <CardTitle className="flex items-center gap-2">
                 <CheckCircle className="h-5 w-5 text-green-600" />
-                動画情報
+{t('video.info')}
               </CardTitle>
             </CardHeader>
             <CardContent>
@@ -261,7 +263,7 @@ function App() {
                 )}
                 <div className="flex-1">
                   <h3 className="font-semibold text-lg mb-2">{videoInfo.title}</h3>
-                  <p className="text-gray-600 mb-4">再生時間: {videoInfo.duration}</p>
+                  <p className="text-gray-600 mb-4">{t('video.duration')}: {videoInfo.duration}</p>
                   
                   <div className="space-y-2">
                     <Button 
@@ -270,14 +272,14 @@ function App() {
                       disabled={downloadProgress?.status === 'downloading'}
                     >
                       {isMobile && canShare ? <Share className="h-4 w-4 mr-2" /> : <Download className="h-4 w-4 mr-2" />}
-                      {downloadProgress?.status === 'downloading' ? 'ダウンロード中...' : 
-                       isMobile && canShare ? '写真アプリに保存' : 'ダウンロード (最高品質)'}
+                      {downloadProgress?.status === 'downloading' ? t('video.downloading') : 
+                       isMobile && canShare ? t('video.saveToPhotos') : t('video.download')}
                     </Button>
                     
                     {videoInfo.formats.length > 1 && (
                       <details className="mt-4">
                         <summary className="cursor-pointer text-sm text-gray-600 hover:text-gray-800">
-                          その他の形式を表示
+                          {t('video.showOtherFormats')}
                         </summary>
                         <div className="mt-2 space-y-2">
                           {videoInfo.formats.slice(0, 5).map((format) => (
@@ -310,14 +312,14 @@ function App() {
                 {downloadProgress.status === 'downloading' && <Loader2 className="h-5 w-5 animate-spin text-blue-600" />}
                 {downloadProgress.status === 'completed' && <CheckCircle className="h-5 w-5 text-green-600" />}
                 {downloadProgress.status === 'error' && <AlertCircle className="h-5 w-5 text-red-600" />}
-                ダウンロード状況
+                {t('download.status')}
               </CardTitle>
             </CardHeader>
             <CardContent>
               {downloadProgress.status === 'downloading' && (
                 <div>
                   <Progress value={downloadProgress.progress} className="mb-2" />
-                  <p className="text-sm text-gray-600">ダウンロード中...</p>
+                  <p className="text-sm text-gray-600">{t('download.progress')}</p>
                 </div>
               )}
               {downloadProgress.status === 'completed' && (
@@ -325,8 +327,8 @@ function App() {
                   <CheckCircle className="h-4 w-4 text-green-600" />
                   <AlertDescription className="text-green-800">
                     {downloadProgress.shared ? 
-                      `写真アプリに保存しました: ${downloadProgress.filename}` : 
-                      `ダウンロード完了: ${downloadProgress.filename}`}
+                      t('download.savedToPhotos', { filename: downloadProgress.filename }) : 
+                      t('download.completed', { filename: downloadProgress.filename })}
                   </AlertDescription>
                 </Alert>
               )}
@@ -346,14 +348,14 @@ function App() {
           <Alert className="mb-6 border-blue-200 bg-blue-50">
             <AlertCircle className="h-4 w-4 text-blue-600" />
             <AlertDescription className="text-blue-800">
-              <strong>モバイルユーザーへ:</strong> ダウンロード後、ファイルを写真アプリに保存するには、ダウンロードフォルダから動画ファイルを選択し、「共有」→「写真に保存」を選択してください。
+              {t('mobile.instruction')}
             </AlertDescription>
           </Alert>
         )}
 
         <div className="mt-8 text-center text-sm text-gray-500">
-          <p>対応サイト: YouTube, Twitter, Facebook, Instagram, TikTok, その他多数</p>
-          <p className="mt-1">著作権を尊重し、個人利用の範囲でご利用ください</p>
+          <p>{t('app.supportedSites')}</p>
+          <p className="mt-1">{t('app.copyright')}</p>
         </div>
 
         <AdComponent placement="footer" className="mt-6" />

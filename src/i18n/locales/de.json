@@ -1,0 +1,43 @@
+{
+  "app": {
+    "title": "Video-Downloader",
+    "description": "Videos von YouTube, Twitter und anderen Websites herunterladen",
+    "supportedSites": "Unterstützte Seiten: YouTube, Twitter, Facebook, Instagram, TikTok und viele mehr",
+    "copyright": "Bitte respektieren Sie das Urheberrecht und verwenden Sie es nur für persönliche Zwecke"
+  },
+  "input": {
+    "title": "Video-URL eingeben",
+    "description": "Geben Sie die URL von YouTube, Twitter oder anderen unterstützten Seiten ein",
+    "placeholder": "https://www.youtube.com/watch?v=...",
+    "analyze": "Analysieren",
+    "enterUrl": "Bitte geben Sie eine URL ein"
+  },
+  "video": {
+    "info": "Video-Informationen",
+    "duration": "Dauer",
+    "download": "Herunterladen (Beste Qualität)",
+    "downloading": "Wird heruntergeladen...",
+    "saveToPhotos": "In Fotos speichern",
+    "showOtherFormats": "Andere Formate anzeigen",
+    "downloaded": "Video heruntergeladen"
+  },
+  "download": {
+    "status": "Download-Status",
+    "progress": "Wird heruntergeladen...",
+    "completed": "Download abgeschlossen: {{filename}}",
+    "savedToPhotos": "In Fotos gespeichert: {{filename}}",
+    "error": "Download-Fehler"
+  },
+  "errors": {
+    "general": "Ein Fehler ist aufgetreten",
+    "videoInfoFailed": "Video-Informationen konnten nicht abgerufen werden",
+    "downloadFailed": "Download fehlgeschlagen"
+  },
+  "mobile": {
+    "instruction": "Für mobile Nutzer: Nach dem Download, um die Datei in Ihrem Fotoalbum zu speichern, wählen Sie die Videodatei aus Ihrem Download-Ordner und wählen Sie 'Teilen' → 'In Fotos speichern'."
+  },
+  "ads": {
+    "loading": "Werbung wird geladen...",
+    "loadFailed": "Werbung konnte nicht geladen werden"
+  }
+}

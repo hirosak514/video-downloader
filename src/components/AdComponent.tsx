@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 import { useIsMobile } from '@/hooks/use-mobile'
+import { useTranslation } from 'react-i18next'
 
 interface AdComponentProps {
   placement: 'header' | 'content' | 'footer'
@@ -7,6 +8,7 @@ interface AdComponentProps {
 }
 
 export function AdComponent({ placement, className = '' }: AdComponentProps) {
+  const { t } = useTranslation()
   const [isLoading, setIsLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
   const isMobile = useIsMobile()
@@ -32,7 +34,7 @@ export function AdComponent({ placement, className = '' }: AdComponentProps) {
         }
       } catch (err) {
         console.warn('Ad loading failed:', err)
-        setError('広告の読み込みに失敗しました')
+        setError(t('ads.loadFailed'))
       } finally {
         setIsLoading(false)
       }
@@ -62,7 +64,7 @@ export function AdComponent({ placement, className = '' }: AdComponentProps) {
       }
     } catch (err) {
       console.warn('Ad loading failed:', err)
-      setError('広告の読み込みに失敗しました')
+      setError(t('ads.loadFailed'))
     } finally {
       setIsLoading(false)
     }
@@ -74,7 +76,7 @@ export function AdComponent({ placement, className = '' }: AdComponentProps) {
     <div className={`ad-container ${className}`}>
       {isLoading && (
         <div className="text-center text-sm text-gray-500 py-2">
-          広告を読み込み中...
+          {t('ads.loading')}
         </div>
       )}
       {error && (
