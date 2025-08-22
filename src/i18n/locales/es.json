@@ -1,0 +1,43 @@
+{
+  "app": {
+    "title": "Descargador de Videos",
+    "description": "Descarga videos de YouTube, Twitter y otros sitios web",
+    "supportedSites": "Sitios compatibles: YouTube, Twitter, Facebook, Instagram, TikTok y muchos más",
+    "copyright": "Por favor respeta los derechos de autor y úsalo solo para fines personales"
+  },
+  "input": {
+    "title": "Ingresa la URL del Video",
+    "description": "Ingresa la URL de YouTube, Twitter u otros sitios compatibles",
+    "placeholder": "https://www.youtube.com/watch?v=...",
+    "analyze": "Analizar",
+    "enterUrl": "Por favor ingresa una URL"
+  },
+  "video": {
+    "info": "Información del Video",
+    "duration": "Duración",
+    "download": "Descargar (Mejor Calidad)",
+    "downloading": "Descargando...",
+    "saveToPhotos": "Guardar en Fotos",
+    "showOtherFormats": "Mostrar otros formatos",
+    "downloaded": "Video descargado"
+  },
+  "download": {
+    "status": "Estado de Descarga",
+    "progress": "Descargando...",
+    "completed": "Descarga completada: {{filename}}",
+    "savedToPhotos": "Guardado en fotos: {{filename}}",
+    "error": "Error de descarga"
+  },
+  "errors": {
+    "general": "Ocurrió un error",
+    "videoInfoFailed": "Error al obtener información del video",
+    "downloadFailed": "Error en la descarga"
+  },
+  "mobile": {
+    "instruction": "Para usuarios móviles: Después de descargar, para guardar el archivo en tu álbum de fotos, selecciona el archivo de video de tu carpeta de descargas y elige 'Compartir' → 'Guardar en Fotos'."
+  },
+  "ads": {
+    "loading": "Cargando anuncios...",
+    "loadFailed": "Error al cargar anuncios"
+  }
+}

@@ -1,0 +1,43 @@
+{
+  "app": {
+    "title": "Téléchargeur de Vidéos",
+    "description": "Téléchargez des vidéos depuis YouTube, Twitter et d'autres sites web",
+    "supportedSites": "Sites pris en charge : YouTube, Twitter, Facebook, Instagram, TikTok et bien d'autres",
+    "copyright": "Veuillez respecter les droits d'auteur et utiliser uniquement à des fins personnelles"
+  },
+  "input": {
+    "title": "Entrez l'URL de la Vidéo",
+    "description": "Entrez l'URL de YouTube, Twitter ou d'autres sites pris en charge",
+    "placeholder": "https://www.youtube.com/watch?v=...",
+    "analyze": "Analyser",
+    "enterUrl": "Veuillez entrer une URL"
+  },
+  "video": {
+    "info": "Informations Vidéo",
+    "duration": "Durée",
+    "download": "Télécharger (Meilleure Qualité)",
+    "downloading": "Téléchargement...",
+    "saveToPhotos": "Enregistrer dans Photos",
+    "showOtherFormats": "Afficher d'autres formats",
+    "downloaded": "Vidéo téléchargée"
+  },
+  "download": {
+    "status": "Statut du Téléchargement",
+    "progress": "Téléchargement...",
+    "completed": "Téléchargement terminé : {{filename}}",
+    "savedToPhotos": "Enregistré dans les photos : {{filename}}",
+    "error": "Erreur de téléchargement"
+  },
+  "errors": {
+    "general": "Une erreur s'est produite",
+    "videoInfoFailed": "Échec de l'obtention des informations vidéo",
+    "downloadFailed": "Échec du téléchargement"
+  },
+  "mobile": {
+    "instruction": "Pour les utilisateurs mobiles : Après le téléchargement, pour enregistrer le fichier dans votre album photo, sélectionnez le fichier vidéo dans votre dossier de téléchargements et choisissez 'Partager' → 'Enregistrer dans Photos'."
+  },
+  "ads": {
+    "loading": "Chargement des publicités...",
+    "loadFailed": "Échec du chargement des publicités"
+  }
+}

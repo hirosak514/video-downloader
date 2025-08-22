@@ -1,0 +1,43 @@
+{
+  "app": {
+    "title": "视频下载器",
+    "description": "从YouTube、Twitter和其他网站下载视频",
+    "supportedSites": "支持的网站：YouTube、Twitter、Facebook、Instagram、TikTok等",
+    "copyright": "请尊重版权，仅供个人使用"
+  },
+  "input": {
+    "title": "输入视频URL",
+    "description": "输入YouTube、Twitter或其他支持网站的URL",
+    "placeholder": "https://www.youtube.com/watch?v=...",
+    "analyze": "分析",
+    "enterUrl": "请输入URL"
+  },
+  "video": {
+    "info": "视频信息",
+    "duration": "时长",
+    "download": "下载（最高质量）",
+    "downloading": "下载中...",
+    "saveToPhotos": "保存到相册",
+    "showOtherFormats": "显示其他格式",
+    "downloaded": "视频已下载"
+  },
+  "download": {
+    "status": "下载状态",
+    "progress": "下载中...",
+    "completed": "下载完成：{{filename}}",
+    "savedToPhotos": "已保存到相册：{{filename}}",
+    "error": "下载错误"
+  },
+  "errors": {
+    "general": "发生错误",
+    "videoInfoFailed": "获取视频信息失败",
+    "downloadFailed": "下载失败"
+  },
+  "mobile": {
+    "instruction": "移动用户：下载后，要将文件保存到相册，请从下载文件夹中选择视频文件，然后选择"分享"→"保存到相册"。"
+  },
+  "ads": {
+    "loading": "加载广告中...",
+    "loadFailed": "广告加载失败"
+  }
+}

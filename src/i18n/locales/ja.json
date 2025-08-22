@@ -1,0 +1,43 @@
+{
+  "app": {
+    "title": "ビデオダウンローダー",
+    "description": "YouTube、Twitter、その他のウェブサイトから動画をダウンロード",
+    "supportedSites": "対応サイト: YouTube, Twitter, Facebook, Instagram, TikTok, その他多数",
+    "copyright": "著作権を尊重し、個人利用の範囲でご利用ください"
+  },
+  "input": {
+    "title": "動画URLを入力",
+    "description": "YouTube、Twitter、その他の対応サイトのURLを入力してください",
+    "placeholder": "https://www.youtube.com/watch?v=...",
+    "analyze": "解析",
+    "enterUrl": "URLを入力してください"
+  },
+  "video": {
+    "info": "動画情報",
+    "duration": "再生時間",
+    "download": "ダウンロード (最高品質)",
+    "downloading": "ダウンロード中...",
+    "saveToPhotos": "写真アプリに保存",
+    "showOtherFormats": "その他の形式を表示",
+    "downloaded": "動画をダウンロードしました"
+  },
+  "download": {
+    "status": "ダウンロード状況",
+    "progress": "ダウンロード中...",
+    "completed": "ダウンロード完了: {{filename}}",
+    "savedToPhotos": "写真アプリに保存しました: {{filename}}",
+    "error": "ダウンロードエラー"
+  },
+  "errors": {
+    "general": "エラーが発生しました",
+    "videoInfoFailed": "ビデオ情報の取得に失敗しました",
+    "downloadFailed": "ダウンロードに失敗しました"
+  },
+  "mobile": {
+    "instruction": "モバイルユーザーへ: ダウンロード後、ファイルを写真アプリに保存するには、ダウンロードフォルダから動画ファイルを選択し、「共有」→「写真に保存」を選択してください。"
+  },
+  "ads": {
+    "loading": "広告を読み込み中...",
+    "loadFailed": "広告の読み込みに失敗しました"
+  }
+}
